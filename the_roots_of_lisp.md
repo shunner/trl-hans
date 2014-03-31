@@ -118,18 +118,15 @@ foo
 
 [<a name="footnote2">2</a>]: 以另外两个操作符 quote 和 cond 开头的表达式，其求值方式有所不同。当 quote 表达式被求值时, 它的实参并未被求值，而是作为整个表达式的值返回。在一个正确的 cond 表达式中，只有 L 形支路上的子表达式会被求值。
 
-\section{函数的表示}
-接着我们定义一个记号来描述函数.函数表示为(lambda (\pone\dots\pn) _ e_),其中
-\pone\dots\pn是原子(叫做_ 参数_),_ e_是表达式. 如果表达式的第一个元素形式如
-上
+## 二、函数的表示
 
-\noindent{\tt
-((lambda (\pone\dots\pn) _ e_) \aone\dots\an)
-}
+接下来，我们定义一个记号来描述函数。函数表示为 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，其中 _p_<sub>1</sub> ... _p_<sub>n</sub> 都是原子（叫做_形式参数（parameter，以下简称形参）_)，而 _e_ 是表达式。以上述表达式作为第一个元素的那些表达式
 
-\noindent则称为_ 函数调用_.它的值计算如下.每一个表达式{$a_{i}$}先求值,然后_ e_再求值.在_ e_的
-求值过程中,每个出现在_ e_中的{$p_{i}$}的值是相应的{$a_{i}$}在最近一
-次的函数调用中的值. 
+```
+((lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_) _a_<sub>1</sub> ... _a_<sub>n</sub>)
+```
+
+被称作一次_函数调用（function call）_，其值按如下方式计算。先对每个 _a_<sub>i</sub> 表达式求值，然后对 _e_ 求值。在 _e_ 的求值过程中，_e_ 中出现的每个 _p_<sub>i</sub> 的值是相应的 _a_<sub>i</sub> 在最近一次函数调用中的值。
 
 ```
 > ((lambda (x) (cons x '(b))) 'a)
@@ -139,19 +136,20 @@ foo
    '(a b c))
 (z b c)
 ```
-如果一个表达式的第一个元素_ f_是原子且_ f_不是原始操作符
 
-\noindent{\tt
-(f \aone\dots\an)
-}
+如果某个表达式的第一个元素 _f_ 是原子且不是基本操作符
 
-\noindent并且_ f_的值是一个函数(lambda (\pone\dots\pn)),则以上表达式的值就是
+```
+(f _a_<sub>1</sub> ... _a_<sub>n</sub>)
+```
 
-\noindent{\tt
-((lambda (\pone\dots\pn) _ e_) \aone\dots\an)
-}
+并且 _f_ 的值是一个函数 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，则上述表达式的值就是
 
-\noindent的值.  换句话说,参数在表达式中不但可以作为自变量也可以作为操作符使用:
+```
+((lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_) _a_<sub>1</sub> ... _a_<sub>n</sub>)
+```
+
+的值。换句话说，在表达式中，形参除了被当作实参，还可作为操作符使用：
 
 ```
 > ((lambda (f) (f '(b c)))
@@ -159,25 +157,25 @@ foo
 (a b c)
 ```
 
-有另外一个函数记号使得函数能提及它本身,这样我们就能方便地定义递归函
-数.\footnote{逻辑上我们不需要为了这定义一个新的记号. 在现有的记号中用
-  一个叫做Y组合器的函数上的函数, 我们可以定义递归函数. 可能麦卡锡在写
-  这篇论文的时候还不知道Y组合器; 无论如何, label可读性更强.} 记号
+另外还有一个函数记号，能让函数引用自己，因而为我们定义递归函数提供了捷径。[<sup>3</sup](#footnote3) 记号
 
-\noindent{\tt
-(label f (lambda (\pone\dots\pn) _ e_))
-}
+```
+(label f (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_))
+```
 
-\noindent表示一个象(lambda (\pone\dots\pn) _ e_)那样的函数,加上这样的特性:
-任何出现在_ e_中的_ f_将求值为此label表达式, 就好象_ f_是此函数的参数.
+所表示的函数，其行为类似于 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，并附带如下属性，在 _e_ 中出现的任何 _f_ 将求值为 label 表达式，如同 _f_ 是函数的形参那样。
 
-假设我们要定义函数(subst _ x y z_), 它取表达式_ x_,原子_ y_和表_ z_做参数,返回一个
-象_ z_那样的表, 不过_ z_中出现的_ y_(在任何嵌套层次上)被_ x_代替.
+[<a name="footnote3">3</a>]: 逻辑上我们不需要为此定义一个新记号。我们可以使用现有的记号定义递归函数，用一个叫做 Y 组合子（Y combinator）的高阶函数。或许 McCathy 写这篇论文的时候还不知道 Y 组合子。无论如何, label 记号更具可读性。
+
+假设我们要定义一个函数 (subst _x y z_)，它接受一个表达式 _x_，一个原子 _y_ 和一个列表 _z_ 并返回一个如同 _z_ 的列表，将 _z_ 中出现的 _y_（在任何嵌套层次上）替换为 _x_。
+
 ```
 > (subst 'm 'b '(a b (a b c) d))
 (a m (a m c) d)
 ```
-我们可以这样表示此函数
+
+我们可以将此函数记作
+
 ```
 (label subst (lambda (x y z)
                (cond ((atom z)
@@ -186,13 +184,15 @@ foo
                      ('t (cons (subst x y (car z))
                                (subst x y (cdr z)))))))
 ```
-我们简记_ f_=(label _ f_ (lambda (\pone\dots\pn) _ e_))为
 
-\noindent{\tt
-(defun _ f_ (\pone\dots\pn) _ e_)
-}
+我们简记 _f_ = (label _f_ (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)) 为
 
-\noindent于是
+```
+(defun _f_ (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)
+```
+
+于是
+
 ```
 (defun subst (x y z)
   (cond ((atom z)
@@ -201,18 +201,18 @@ foo
         ('t (cons (subst x y (car z))
                   (subst x y (cdr z))))))
 ```
-偶然地我们在这儿看到如何写cond表达式的缺省子句. 第一个元素是't的子句总
-是会成功的. 于是
 
-\noindent{\tt
-(cond (_ x y_) ('t _ z_))
-}
+我们在这里偶然看到了如何实现 cond 表达式的缺省子句。第一个元素是 't 的子句总是会成功。于是
 
-\noindent等同于我们在某些语言中写的
+```
+(cond (_x y_) ('t _z_))
+```
 
-\noindent{\tt
-if _ x_ then _ y_ else _ z_
-}
+等价于我们在支持如下语法的语言中的写法
+
+```
+if _x_ then _y_ else _z_
+```
 
 \section{一些函数}
 既然我们有了表示函数的方法,我们根据七个原始操作符来定义一些新的函数.
@@ -437,8 +437,8 @@ lambda的表达式求值. 即:
 ```
 最终返回a.
 
-最后,对形如((lambda (\pone\dots\pn) _ e_) \aone\dots\an)的表达式求值,先调用evlis.来
-求得自变量(\aone\dots\an)对应的值(\vone\dots\vn),把(\pone \vone)\dots(\pn \vn)添加到
+最后,对形如((lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _ e_) _a_<sub>1</sub> ... _a_<sub>n</sub>)的表达式求值,先调用evlis.来
+求得自变量(_a_<sub>1</sub> ... _a_<sub>n</sub>)对应的值(\vone\dots\vn),把(\pone \vone)\dots(\pn \vn)添加到
 环境里, 然后对_ e_求值.  于是
 
 ```

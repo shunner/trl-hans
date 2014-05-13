@@ -3,18 +3,18 @@ Lisp 之根本
 Paul Graham
 
 
-1960 年，John McCarthy 发表过一篇非同凡响的论文，他在其中对程序设计领域的贡献，有如欧几里德对几何学的贡献。[<sup>1</sup>](#footnote1) 他演示了一种方法，给定几个简单的操作符和一个表示函数的标记，就能构造出一门完整的编程语言。他称这门语言为 Lisp，即“List Processing”的缩写，因为他的主要思想之一，就是用同一种简单数据结构——_列表（list）_来承载代码和数据。
+1960 年，John McCarthy 发表过一篇非同凡响的论文，他在其中对程序设计领域的贡献，有如欧几里德对几何学的贡献。[<sup>1</sup>](#footnote1) 他演示了一种方法，给定几个简单的操作符和一个表示函数的标记（notation），就可以构造出一门完整的编程语言。他称这门语言为 Lisp，即“List Processing”（列表处理）的缩写，因为其主要思想之一就是，代码和数据皆用同一种叫做_列表（list）_的简单数据结构来承载。
 
 [<a name="footnote1">1</a>]: "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part1." _Communication of the ACM_ 3:4, April 1960, pp. 184-195.
 
-McCarthy 的发现值得我们深究，因为它不仅是计算机历史上的里程碑，还是时下程序设计逐渐趋向的一种模式。在我看来，目前为止真正整洁、一致的编程模式只有两种：C 语言模式和 Lisp 语言模式。它们就像两座高峰，其间则遍布低洼沼泽。随着计算机变得越来越强大，新开发的语言一直在坚定地向 Lisp 模式靠拢。二十年来，新兴程序设计语言的流行秘方就是，取 C 语言的运算模式，零星点缀一些 Lisp 语言模式的碎片，例如运行时类型和垃圾回收。
+McCarthy 的发现值得我们深究，因为它不仅是计算机史上的里程碑，而且是时下程序设计逐渐趋向的一种模式。在我看来，目前为止真正整洁、一致的编程模式只有两种：C 语言模式和 Lisp 语言模式。它们就像两座高峰，其间则遍布低洼沼泽。随着计算机的发展壮大，新开发的语言一直在坚定地向 Lisp 模式靠拢。二十年来，新兴程序设计语言的流行秘方就是，取 C 语言的运算模式，零星点缀一些 Lisp 语言模式的碎片，例如运行时类型和垃圾回收。
 
-在本文中，我将试着用最简单的术语来解释 John McCarthy  的发现。重点不仅在于领会四十年前的某个人在理论方面的有趣成果，还在于展示编程语言的前进方向。Lisp 的不同寻常之处——也就是它决定性的特质——是它由自己编写而成。为了理解 McCarthy 这句话的含义，我们将追随他的足迹，同时将他的数学标记转换成能够运行的 Common Lisp 代码。
+在本文中，我将试着用最简单的术语来解释 John McCarthy 的发现。重点不仅在于领会四十年前某人取得的有趣理论成果，还在于展示编程语言的前进方向。Lisp 的不同寻常之处——也就是它决定性的特质——在于它可以由自己编写而成。为了理解 McCarthy 这句话的含义，我们将追随他的足迹，同时将他的数学标记转换成能够运行的 Common Lisp 代码。
 
 
 ## 一、七个基本操作符
 
-首先，我们定义一下_表达式（expression）_。表达式既可以是一个_原子（atom）_，即一串英文字母（如 foo)，也可以是包在一对小括号中，由空格分隔的，零个或多个表达式组成的_列表（list）_。下面是一些表达式：
+首先，我们定义一下_表达式（expression）_。表达式既可以是一个_原子（atom）_，即一串英文字母（如 foo)，也可以是零个或多个表达式组成的_列表（list）_，它们由空格隔开并被包裹在一对小括号中。下面就有一些表达式：
 
 ```
 foo
@@ -108,7 +108,7 @@ foo
     (b c)
     ```
 
-7. (cond (_p_<sub>1</sub>&nbsp;_e_<sub>1</sub>) ... (_p_<sub>n</sub>&nbsp;_e_<sub>n</sub>)) 的求值规则如下。对各个 _p_ 表达式依次求值，首次遇到返回 t 的 _p_ 表达式时，就返回其相应的 _e_ 表达式的值作为整个 cond 表达式的值。
+7. (cond (_p_<sub>1</sub> _e_<sub>1</sub>) ... (_p_<sub>n</sub> _e_<sub>n</sub>)) 的求值规则如下。对各个 _p_ 表达式依次求值，首次遇到返回 t 的 _p_ 表达式时，就返回其相应的 _e_ 表达式的值作为整个 cond 表达式的值。
 
     ```
     > (cond ((eq 'a 'b) 'first)
@@ -123,9 +123,11 @@ foo
 
 ## 二、函数的表示
 
-接下来，我们定义一个记号来描述函数。函数表示为 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，其中 _p_<sub>1</sub> ... _p_<sub>n</sub> 都是原子（叫做_形式参数（parameter，以下简称形参）_)，而 _e_ 是表达式。以上述表达式作为第一个元素的那些表达式
+接下来，我们定义一个标记来描述函数。函数表示为 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，其中 _p_<sub>1</sub> ... _p_<sub>n</sub> 都是原子（叫做_形式参数（parameter，以下简称形参）_)，而 _e_ 是表达式。以上述表达式作为第一个元素的那些表达式
 
+```
 ((lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_) _a_<sub>1</sub> ... _a_<sub>n</sub>)
+```
 
 被称作一次_函数调用（function call）_，其值按如下方式计算。先对每个 _a_<sub>i</sub> 表达式求值，然后对 _e_ 求值。在 _e_ 的求值过程中，_e_ 中出现的每个 _p_<sub>i</sub> 的值是相应的 _a_<sub>i</sub> 在最近一次函数调用中的值。
 
@@ -140,11 +142,15 @@ foo
 
 如果某个表达式的第一个元素 _f_ 是原子且不是基本操作符
 
+```
 (f _a_<sub>1</sub> ... _a_<sub>n</sub>)
+```
 
 并且 _f_ 的值是一个函数 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，则上述表达式的值就是
 
+```
 ((lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_) _a_<sub>1</sub> ... _a_<sub>n</sub>)
+```
 
 的值。换句话说，在表达式中，形参除了被当作实参，还可作为操作符使用：
 
@@ -154,15 +160,17 @@ foo
 (a b c)
 ```
 
-另外还有一个函数记号，能让函数引用自己，因而为我们定义递归函数提供了捷径。[<sup>3</sup](#footnote3) 记号
+另外还有一个函数标记，能让函数引用自己，因而给我们定义递归函数提供了便利。[<sup>3</sup](#footnote3) 标记
 
+```
 (label f (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_))
+```
 
-所表示的函数，其行为类似于 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，并附带如下属性，在 _e_ 中出现的任何 _f_ 将求值为 label 表达式，如同 _f_ 是函数的形参那样。
+所表示的函数，其行为类似于 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，并附带如下属性，在 _e_ 中出现的任何 _f_ 都将求值为该 label 表达式，如同 _f_ 是函数的形参那样。
 
-[<a name="footnote3">3</a>]: 逻辑上我们不需要为此定义一个新记号。我们可以使用现有的记号定义递归函数，用一个叫做 Y 组合子（Y combinator）的高阶函数。或许 McCathy 写这篇论文的时候还不知道 Y 组合子。无论如何, label 记号更具可读性。
+[<a name="footnote3">3</a>]: 逻辑上我们不需要为此定义一个新标记。我们可以使用现有的标记，借助一种叫做 Y 组合子（Y combinator）的高阶函数来定义递归函数。或许 McCathy 写这篇论文的时候还不知道 Y 组合子。无论如何, label 标记更具可读性。
 
-假设我们要定义一个函数 (subst _x y z_)，它接受一个表达式 _x_，一个原子 _y_ 和一个列表 _z_ 并返回一个如同 _z_ 的列表，将 _z_ 中出现的 _y_（在任何嵌套层次上）替换为 _x_。
+假设我们要定义一个函数 (subst _x y z_)，它接受一个表达式 _x_，一个原子 _y_ 和一个列表 _z_ 并返回一个像 _z_ 那样的列表，将 _z_ 中出现的 _y_（在任何嵌套层次上）替换为 _x_。
 
 ```
 > (subst 'm 'b '(a b (a b c) d))
@@ -182,7 +190,9 @@ foo
 
 我们简记 _f_ = (label _f_ (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)) 为
 
+```
 (defun _f_ (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)
+```
 
 于是
 
@@ -197,18 +207,20 @@ foo
 
 我们在这里偶然看到了如何实现 cond 表达式的缺省子句。第一个元素是 't 的子句总是会成功。于是
 
+```
 (cond (_x y_) ('t _z_))
+```
 
-等价于我们在支持如下语法的语言中的写法
+等价于我们使用其他语言中的如下语法
 
+```
 if _x_ then _y_ else _z_
+```
 
 
-\section{一些函数}
-既然我们有了表示函数的方法,我们根据七个原始操作符来定义一些新的函数.
-为了方便我们引进一些常见模式的简记法.  我们用c_ x_r,其中_ x_是a或d的序列,来
-简记相应的car和cdr的组合. 比如(cadr _ e_)是(car (cdr _ e_))的简记,它返回_ e_的
-第二个元素.
+## 三、几个函数
+
+既然有了表示函数的方法，我们就基于七个基本操作符来定义一些新的函数。首先，为了方便起见，我们引进一些常见模式的简记法。我们使用 c_x_r，其中 _x_ 是一系列的 a 或 d，来简记相应的 car 和 cdr 的组合。因此 (cadr _e_) 是 (car (cdr _e_))的简记，它返回 _e_ 的第二个元素。
 
 ```
 > (cadr '((a b) (c d) e))
@@ -218,7 +230,9 @@ e
 > (cdar '((a b) (c d) e))
 (b)
 ```
-我们还用(list \eone\dots\en)表示(cons \eone\dots(cons \en '()) \dots).
+
+另外，我们用 (list _e_<sub>1</sub> ... _e_<sub>n</sub>) 表示 (cons _e_<sub>1</sub> ... (cons _e_<sub>n</sub> '()) ... )。
+
 ```
 > (cons 'a (cons 'b (cons 'c '())))
 (a b c)
@@ -226,89 +240,85 @@ e
 (a b c)
 ```
 
-现在我们定义一些新函数. 我在函数名后面加了点,以区别函数和定义它们的原
-始函数,也避免与现存的common Lisp的函数冲突.
+现在我们定义几个新的函数。我在这些函数的名称后面加上了英文句号。这一举措可将基本函数与那些由它们构成的函数区分开，同时也避免了与现存的 Common Lisp 函数冲突。
 
-\begin{enumerate}
-\item (null. _ x_)测试它的自变量是否是空表.
+1. (null. _x_) 测试它的实参是否是空列表。
 
-```
-(defun null. (x)
-  (eq x '()))
+    ```
+    (defun null. (x)
+      (eq x '()))
 
-> (null. 'a)
-()
-> (null. '())
-t
-```
+    > (null. 'a)
+    ()
+    > (null. '())
+    t
+    ```
 
-\item (and. _ x y_)返回t如果它的两个自变量都是t, 否则返回().
+2. (and. _x y_) 如果它的两个形参都为 t 就返回 t, 否则返回 ()。
 
-```
-(defun and. (x y)
-  (cond (x (cond (y 't) ('t '())))
-        ('t '())))
+    ```
+    (defun and. (x y)
+      (cond (x (cond (y 't) ('t '())))
+            ('t '())))
 
-> (and. (atom 'a) (eq 'a 'a))
-t
-> (and. (atom 'a) (eq 'a 'b))
-()
-```
+    > (and. (atom 'a) (eq 'a 'a))
+    t
+    > (and. (atom 'a) (eq 'a 'b))
+    ()
+    ```
 
-\item (not. _ x_)返回t如果它的自变量返回(),返回()如果它的自变量返回t.
+3. (not. _x_) 如果它的实参返回 () 就返回 t，反之亦然。
 
-```
-(defun not. (x)
-  (cond (x '())
-        ('t 't)))
+    ```
+    (defun not. (x)
+      (cond (x '())
+            ('t 't)))
 
-> (not. (eq 'a 'a))
-()
-> (not. (eq 'a 'b))
-t
-```
+    > (not. (eq 'a 'a))
+    ()
+    > (not. (eq 'a 'b))
+    t
+    ```
 
-\item (append. {\t x y})取两个表并返回它们的连结.
+4. (append. _x y_) 接受两个列表并返回它们连接后的结果。
 
-```
-(defun append. (x y)
-   (cond ((null. x) y)
-         ('t (cons (car x) (append. (cdr x) y)))))
+    ```
+    (defun append. (x y)
+       (cond ((null. x) y)
+             ('t (cons (car x) (append. (cdr x) y)))))
 
-> (append. '(a b) '(c d))
-(a b c d)
-> (append. '() '(c d))
-(c d)
-```
+    > (append. '(a b) '(c d))
+    (a b c d)
+    > (append. '() '(c d))
+    (c d)
+    ```
 
-\item (pair. _ x y_)取两个相同长度的表,返回一个由双元素表构成的表,双元素表是相
-应位置的x,y的元素对.
+5. (pair. _x y_) 接受两个相同长度的列表，并返回一个由双元素列表构成的列表，其中的双元素列表是按顺序从两个列表各取一个元素构成的。
 
-```
-(defun pair. (x y)
-  (cond ((and. (null. x) (null. y)) '())
-        ((and. (not. (atom x)) (not. (atom y)))
-         (cons (list (car x) (car y))
-               (pair. (cdr) (cdr y))))))
+    ```
+    (defun pair. (x y)
+      (cond ((and. (null. x) (null. y)) '())
+            ((and. (not. (atom x)) (not. (atom y)))
+             (cons (list (car x) (car y))
+                   (pair. (cdr) (cdr y))))))
 
-> (pair. '(x y z) '(a b c))
-((x a) (y b) (z c))
-```
+    > (pair. '(x y z) '(a b c))
+    ((x a) (y b) (z c))
+    ```
 
-\item (assoc. _ x y_)取原子_ x_和形如pair.函数所返回的表_ y_,返回_ y_中第一个符合如下条
-件的表的第二个元素:它的第一个元素是_ x_.
+6. (assoc. _x y_) 接受原子 _x_ 和类似 pair. 函数返回值的列表 _y_，并返回 _y_ 中第一个以元素 _x_ 开头的列表的第二个元素。
 
-```
-(defun assoc. (x y)
-  (cond ((eq (caar y) x) (cadar y))
-        ('t (assoc. x (cdr y)))))
+    ```
+    (defun assoc. (x y)
+      (cond ((eq (caar y) x) (cadar y))
+            ('t (assoc. x (cdr y)))))
 
-> (assoc. 'x '((x a) (y b)))
-a
-> (assoc. 'x '((x new) (x a) (y b)))
-new
-```
-\end{enumerate}
+    > (assoc. 'x '((x a) (y b)))
+    a
+    > (assoc. 'x '((x new) (x a) (y b)))
+    new
+    ```
+
 
 \section{一个惊喜}
 因此我们能够定义函数来连接表,替换表达式等等.也许算是一个优美的表示法,

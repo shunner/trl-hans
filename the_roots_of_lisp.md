@@ -9,7 +9,7 @@ Paul Graham
 
   McCarthy 的发现值得我们深究，因为它不仅是计算机史上的里程碑，而且是时下程序设计逐渐趋向的一种模式。在我看来，目前为止真正整洁、一致的编程模式只有两种：C 语言模式和 Lisp 语言模式。它们就像两座高峰，其间则遍布低洼沼泽。随着计算机的发展壮大，新开发的语言一直在坚定地向 Lisp 模式靠拢。二十年来，新兴程序设计语言的流行秘方就是，取 C 语言的运算模式，零星点缀一些 Lisp 语言模式的碎片，例如运行时类型和垃圾回收。
 
-  在本文中，我将试着用最简单的术语来解释 John McCarthy 的发现。重点不仅在于领会四十年前某人取得的有趣理论成果，还在于展示编程语言的前进方向。Lisp 的不同寻常之处——也就是它决定性的特质——在于它可以由自己编写而成。为了理解 McCarthy 这句话的含义，我们将追随他的足迹，同时将他的数学标记转换成能够运行的 Common Lisp 代码。
+  在本文中，我将试着用最简单的术语来解释 John McCarthy 的发现。重点不仅在于领会四十年前某人取得的有趣理论成果，还在于展示编程语言的前进方向。Lisp 的不同寻常之处——也就是它决定性的特质——在于它可以由自己编写而成。为了理解 McCarthy 这句话的含义，我们将追随他的足迹，同时将他的数学标记转换成可执行的 Common Lisp 代码。
 
 
 ## 一、七个基本操作符
@@ -116,7 +116,7 @@ foo
     second
     ```
 
-当被求值的表达式以七个基本操作符中的五个开头时，它的实参总是被求值。[<sup>2</sup>](#footnote2) 我们将这类操作符称为_函数（function）_。
+当被求值的表达式以七个基本操作符中的五个开头时，它的实参总是被求值。[<sup>2</sup>](#footnote2) 我们把这类操作符叫做_函数（function）_。
 
 [<a name="footnote2">2</a>]: 以另外两个操作符 quote 和 cond 开头的表达式，其求值方式有所不同。当 quote 表达式被求值时, 它的实参并未被求值，而是作为整个表达式的值返回。在一个正确的 cond 表达式中，只有 L 形支路上的子表达式会被求值。
 
@@ -160,7 +160,7 @@ foo
 
 这一标记所表示的函数，其行为就像是 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，并附带如下属性，在 _e_ 中出现的任何 _f_ 都将被作为该 label 表达式求值，就好像 _f_ 是函数的形参。
 
-[<a name="footnote3">3</a>]: 逻辑上我们并不需要为此定义一个新标记。我们可以使用现有的标记，借助一种叫做 Y 组合子（Y combinator）的高阶函数来定义递归函数。或许 McCathy 写这篇论文时还不知道 Y 组合子。无论如何, label 标记更具可读性。
+[<a name="footnote3">3</a>]: 逻辑上我们并不需要为此定义一个新标记。我们可以使用现有的标记，借助一种叫做 Y 组合子（Y combinator）的高阶函数来定义递归函数。或许 McCathy 撰写这篇论文时还不知道 Y 组合子。无论如何, label 标记更具可读性。
 
 假设我们要定义一个函数 (subst _x y z_)，它接受一个表达式 _x_，一个原子 _y_ 和一个列表 _z_ 并返回一个像 _z_ 那样的列表，将 _z_ 中出现的 _y_（在任何嵌套层次上）替换为 _x_。
 
@@ -286,7 +286,7 @@ e
         (cond ((and. (null. x) (null. y)) '())
             ((and. (not. (atom x)) (not. (atom y)))
                 (cons (list (car x) (car y))
-                    (pair. (cdr) (cdr y))))))
+                    (pair. (cdr x) (cdr y))))))
 
     > (pair. '(x y z) '(a b c))
     ((x a) (y b) (z c))
@@ -306,63 +306,59 @@ e
     ```
 
 
-\section{一个惊喜}
-因此我们能够定义函数来连接表,替换表达式等等.也许算是一个优美的表示法,
-那下一步呢?  现在惊喜来了. 我们可以写一个函数作为我们语言的解释器:此函
-数取任意Lisp表达式作自变量并返回它的值. 如下所示:
+## 四、惊喜所在
 
-```
-(defun eval. (e a)
-  (cond 
-    ((atom e) (assoc. e a))
-    ((atom (car e))
-     (cond 
-       ((eq (car e) 'quote) (cadr e))
-       ((eq (car e) 'atom)  (atom   (eval. (cadr e) a)))
-       ((eq (car e) 'eq)    (eq     (eval. (cadr e) a)
-                                    (eval. (caddr e) a)))
-       ((eq (car e) 'car)   (car    (eval. (cadr e) a)))
-       ((eq (car e) 'cdr)   (cdr    (eval. (cadr e) a)))
-       ((eq (car e) 'cons)  (cons   (eval. (cadr e) a)
-                                    (eval. (caddr e) a)))
-       ((eq (car e) 'cond)  (evcon. (cdr e) a))
-       ('t (eval. (cons (assoc. (car e) a)
-                        (cdr e))
-                  a))))
-    ((eq (caar e) 'label)
-     (eval. (cons (caddar e) (cdr e))
-            (cons (list (cadar e) (car e)) a)))
-    ((eq (caar e) 'lambda)
-     (eval. (caddar e)
-            (append. (pair. (cadar e) (evlis. (cdr  e) a))
-                     a)))))
+我们已经可以定义函数来实现诸如连接列表，替换表达式等功能。也许算是一种优雅的标记法，但也不过如此吧？下面该惊喜出场了。事实证明，我们还可以编写一个函数来充当我们语言的解释器：此函数接受任意 Lisp 表达式作为实参，并返回它的值。如下所示：
 
-(defun evcon. (c a)
-  (cond ((eval. (caar c) a)
-         (eval. (cadar c) a))
-        ('t (evcon. (cdr c) a))))
+    ```
+    (defun eval. (e a)
+      (cond 
+        ((atom e) (assoc. e a))
+        ((atom (car e))
+         (cond 
+           ((eq (car e) 'quote) (cadr e))
+           ((eq (car e) 'atom)  (atom   (eval. (cadr e) a)))
+           ((eq (car e) 'eq)    (eq     (eval. (cadr e) a)
+                                        (eval. (caddr e) a)))
+           ((eq (car e) 'car)   (car    (eval. (cadr e) a)))
+           ((eq (car e) 'cdr)   (cdr    (eval. (cadr e) a)))
+           ((eq (car e) 'cons)  (cons   (eval. (cadr e) a)
+                                        (eval. (caddr e) a)))
+           ((eq (car e) 'cond)  (evcon. (cdr e) a))
+           ('t (eval. (cons (assoc. (car e) a)
+                            (cdr e))
+                      a))))
+        ((eq (caar e) 'label)
+         (eval. (cons (caddar e) (cdr e))
+                (cons (list (cadar e) (car e)) a)))
+        ((eq (caar e) 'lambda)
+         (eval. (caddar e)
+                (append. (pair. (cadar e) (evlis. (cdr  e) a))
+                         a)))))
 
-(defun evlis. (m a)
-  (cond ((null. m) '())
-        ('t (cons (eval.  (car m) a)
-                  (evlis. (cdr m) a)))))
-```
-eval.的定义比我们以前看到的都要长. 让我们考虑它的每一部分是如何工作的.
+    (defun evcon. (c a)
+      (cond ((eval. (caar c) a)
+             (eval. (cadar c) a))
+            ('t (evcon. (cdr c) a))))
 
-eval.有两个自变量: e是要求值的表达式, a是由一些赋给原子的值构成的表,这
-些值有点象函数调用中的参数.  这个形如pair.的返回值的表叫做_ 环境_.  正是
-为了构造和搜索这种表我们才写了pair.和assoc..
+    (defun evlis. (m a)
+      (cond ((null. m) '())
+            ('t (cons (eval.  (car m) a)
+                      (evlis. (cdr m) a)))))
+    ```
 
-eval.的骨架是一个有四个子句的cond表达式.  如何对表达式求值取决于它的类
-型. 第一个子句处理原子.  如果e是原子, 我们在环境中寻找它的值:
+eval. 的定义比我们在前文见过的都要长。我们分别考虑一下每个部分的作用。
+
+    该函数接受两个实参：e 是要被求值的表达式，而 a 是一个列表，以类似函数调用中的实参的形式列出原子的取值。这种形如 pair. 返回值的列表叫做_环境（environment）_。正是为了构造和搜索这种列表，我们才编写了 pair. 和 assoc.。
+
+    eval. 的主干是一个带有四个子句的 cond 表达式。我们对某个表达式求值的方式取决于它的类型。第一个子句处理原子。如果 e 是原子，我们在环境中寻找它的值：
 
 ```
 > (eval. 'x '((x a) (y b)))
 a
 ```
 
-第二个子句是另一个cond, 它处理形如(_ a_ \dots)的表达式, 其中_ a_是原子.  这包
-括所有的原始操作符, 每个对应一条子句.
+    eval. 的第二个子句是另一个 cond，它处理形如 (_a_ ...) 的表达式，其中 _a_ 是原子。这里包括所有的原始操作符，每个操作符对应一个子句。
 
 ```
 > (eval. '(eq 'a 'a) '())
@@ -371,11 +367,10 @@ t
          '((x a) (y b)))
 (a b c)
 ```
-这几个子句(除了quote)都调用eval.来寻找自变量的值.
 
-最后两个子句更复杂些. 为了求cond表达式的值我们调用了一个叫
-evcon.的辅助函数. 它递归地对cond子句进行求值,寻找第一个元素返回t的子句.  如果找到
-了这样的子句, 它返回此子句的第二个元素.
+这几个子句（除了 quote）都调用 eval. 来寻找实参的值。
+
+    最后两个子句更复杂些。为了对 cond 表达式求值，我们调用了一个叫做 evcon. 的辅助函数。它递归地对 cond 子句进行求值，寻找第一个元素返回 t 的子句。当它找到这样的子句，就返回其第二个元素。
 
 ```
 > (eval. '(cond ((atom x) 'atom)

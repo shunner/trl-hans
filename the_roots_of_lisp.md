@@ -310,55 +310,55 @@ e
 
 我们已经可以定义函数来实现诸如连接列表，替换表达式等功能。也许算是一种优雅的标记法，但也不过如此吧？下面该惊喜出场了。事实证明，我们还可以编写一个函数来充当我们语言的解释器：此函数接受任意 Lisp 表达式作为实参，并返回它的值。如下所示：
 
-    ```
-    (defun eval. (e a)
-      (cond 
-        ((atom e) (assoc. e a))
-        ((atom (car e))
-         (cond 
-           ((eq (car e) 'quote) (cadr e))
-           ((eq (car e) 'atom)  (atom   (eval. (cadr e) a)))
-           ((eq (car e) 'eq)    (eq     (eval. (cadr e) a)
-                                        (eval. (caddr e) a)))
-           ((eq (car e) 'car)   (car    (eval. (cadr e) a)))
-           ((eq (car e) 'cdr)   (cdr    (eval. (cadr e) a)))
-           ((eq (car e) 'cons)  (cons   (eval. (cadr e) a)
-                                        (eval. (caddr e) a)))
-           ((eq (car e) 'cond)  (evcon. (cdr e) a))
-           ('t (eval. (cons (assoc. (car e) a)
-                            (cdr e))
-                      a))))
-        ((eq (caar e) 'label)
-         (eval. (cons (caddar e) (cdr e))
-                (cons (list (cadar e) (car e)) a)))
-        ((eq (caar e) 'lambda)
-         (eval. (caddar e)
-                (append. (pair. (cadar e) (evlis. (cdr  e) a))
-                         a)))))
+  ```
+  (defun eval. (e a)
+    (cond 
+      ((atom e) (assoc. e a))
+      ((atom (car e))
+       (cond 
+         ((eq (car e) 'quote) (cadr e))
+         ((eq (car e) 'atom)  (atom   (eval. (cadr e) a)))
+         ((eq (car e) 'eq)    (eq     (eval. (cadr e) a)
+                                      (eval. (caddr e) a)))
+         ((eq (car e) 'car)   (car    (eval. (cadr e) a)))
+         ((eq (car e) 'cdr)   (cdr    (eval. (cadr e) a)))
+         ((eq (car e) 'cons)  (cons   (eval. (cadr e) a)
+                                      (eval. (caddr e) a)))
+         ((eq (car e) 'cond)  (evcon. (cdr e) a))
+         ('t (eval. (cons (assoc. (car e) a)
+                          (cdr e))
+                    a))))
+      ((eq (caar e) 'label)
+       (eval. (cons (caddar e) (cdr e))
+              (cons (list (cadar e) (car e)) a)))
+      ((eq (caar e) 'lambda)
+       (eval. (caddar e)
+              (append. (pair. (cadar e) (evlis. (cdr  e) a))
+                       a)))))
 
-    (defun evcon. (c a)
-      (cond ((eval. (caar c) a)
-             (eval. (cadar c) a))
-            ('t (evcon. (cdr c) a))))
+  (defun evcon. (c a)
+    (cond ((eval. (caar c) a)
+           (eval. (cadar c) a))
+          ('t (evcon. (cdr c) a))))
 
-    (defun evlis. (m a)
-      (cond ((null. m) '())
-            ('t (cons (eval.  (car m) a)
-                      (evlis. (cdr m) a)))))
-    ```
+  (defun evlis. (m a)
+    (cond ((null. m) '())
+          ('t (cons (eval.  (car m) a)
+                    (evlis. (cdr m) a)))))
+  ```
 
 eval. 的定义比我们在前文见过的都要长。我们分别考虑一下每个部分的作用。
 
-    该函数接受两个实参：e 是要被求值的表达式，而 a 是一个列表，以类似函数调用中的实参的形式列出原子的取值。这种形如 pair. 返回值的列表叫做_环境（environment）_。正是为了构造和搜索这种列表，我们才编写了 pair. 和 assoc.。
+  该函数接受两个实参：e 是要被求值的表达式，而 a 是一个列表，以类似函数调用中的实参的形式列出原子的取值。这种形如 pair. 返回值的列表叫做_环境（environment）_。正是为了构造和搜索这种列表，我们才编写了 pair. 和 assoc.。
 
-    eval. 的主干是一个带有四个子句的 cond 表达式。我们对某个表达式求值的方式取决于它的类型。第一个子句处理原子。如果 e 是原子，我们在环境中寻找它的值：
+  eval. 的主干是一个带有四个子句的 cond 表达式。我们对某个表达式求值的方式取决于它的类型。第一个子句处理原子。如果 e 是原子，我们在环境中寻找它的值：
 
 ```
 > (eval. 'x '((x a) (y b)))
 a
 ```
 
-    eval. 的第二个子句是另一个 cond，它处理形如 (_a_ ...) 的表达式，其中 _a_ 是原子。这里包括所有的原始操作符，每个操作符对应一个子句。
+  eval. 的第二个子句是另一个 cond，它处理形如 (_a_ ...) 的表达式，其中 _a_ 是原子。这里包括所有的原始操作符，每个操作符对应一个子句。
 
 ```
 > (eval. '(eq 'a 'a) '())
@@ -370,7 +370,7 @@ t
 
 这几个子句（除了 quote）都调用 eval. 来寻找实参的值。
 
-    最后两个子句更复杂些。为了对 cond 表达式求值，我们调用了一个叫做 evcon. 的辅助函数。它递归地对 cond 子句进行求值，寻找第一个元素返回 t 的子句。当它找到这样的子句，就返回其第二个元素。
+  最后两个子句更复杂些。为了对 cond 表达式求值，我们调用了一个叫做 evcon. 的辅助函数。它递归地对 cond 子句进行求值，寻找第一个元素返回 t 的子句。当它找到这样的子句，就返回其第二个元素。
 
 ```
 > (eval. '(cond ((atom x) 'atom)

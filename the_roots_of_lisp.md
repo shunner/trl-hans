@@ -395,7 +395,7 @@ list
 
 它返回(a b c)。
 
-eval. 的最后两个子句处理那些第一个元素是 lambda 或 label 表达式的函数调用。为了对 label 表达式求值，先把函数名和函数本身压入环境，然后调用 eval. 对一个内部有 lambda 的表达式求值，即：
+eval. 的最后两个子句处理那些刚好以 lambda 或 label 表达式开头的函数调用。对 label 表达式求值，要先把由函数名和函数本身组成的列表压入环境，然后调用 eval. 对剥开 label 表达式得到的 lambda 表达式求值，即：
 
 ```
 (eval. '((label firstatom (lambda (x)

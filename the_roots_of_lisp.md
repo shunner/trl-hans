@@ -395,7 +395,7 @@ list
 
 它返回(a b c)。
 
-eval. 的最后两个子句处理那些刚好以 lambda 或 label 表达式开头的函数调用。对 label 表达式求值，要先把由函数名和函数本身组成的列表压入环境，然后调用 eval. 对剥开 label 表达式得到的 lambda 表达式求值，即：
+  eval. 的最后两个子句处理那些刚好以 lambda 或 label 表达式开头的函数调用。对 label 表达式求值，要先把由函数名和函数本身组成的列表压入环境，然后调用 eval. 对剥开 label 表达式得到的 lambda 表达式求值，即：
 
 ```
 (eval. '((label firstatom (lambda (x)
@@ -421,9 +421,7 @@ eval. 的最后两个子句处理那些刚好以 lambda 或 label 表达式开�
 
 最终返回a.
 
-最后，对形如 ((lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_) _a_<sub>1</sub> ... _a_<sub>n</sub>) 的表达式求值，要先调用 evlis. 
-求得实参 (_a_<sub>1</sub> ... _a_<sub>n</sub>) 相应取值的列表 (_v_<sub>1</sub> ... _v_<sub>n</sub>)，然后把 (_p_<sub>1</sub> _v_<sub>1</sub>) ... (_p_<sub>n</sub> _v_<sub>n</sub>) 添加到
-环境的开头，并对 _e_ 求值。于是
+  最后，对形如 ((lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_) _a_<sub>1</sub> ... _a_<sub>n</sub>) 的表达式求值，要先调用 evlis. 求得实参 (_a_<sub>1</sub> ... _a_<sub>n</sub>) 相应取值的列表 (_v_<sub>1</sub> ... _v_<sub>n</sub>)，然后把 (_p_<sub>1</sub> _v_<sub>1</sub>) ... (_p_<sub>n</sub> _v_<sub>n</sub>) 添加到环境的开头，并对 _e_ 求值。于是
 
 ```
 (eval. '((lambda (x y) (cons x (cdr y)))
@@ -442,16 +440,12 @@ eval. 的最后两个子句处理那些刚好以 lambda 或 label 表达式开�
 最终返回(a c d)。
 
 
-\section{后果}
+## 五、余音绕梁
 
-既然理解了eval是如何工作的, 让我们回过头考虑一下这意味着什么. 我们在这
-儿得到了一个非常优美的计算模型. 仅用quote,atom,eq,car,cdr,cons,和cond,
-我们定义了函数eval.,它事实上实现了我们的语言,用它可以定义任何我们想要
-的额外的函数.
+既然理解了 eval 的工作原理，让我们回过头来考虑一下这意味着什么。我们拥有了一个简约的计算模型。仅用 quote、atom、eq、car、cdr、cons 和 cond 
+就定义了函数 eval.，真正实现了我们的语言，从而可以随心所欲地定义更多函数。
 
-当然早已有了各种计算模型---最著名的是图灵机.  但是图灵机程序难以读懂.
-如果你要一种描述算法的语言, 你可能需要更抽象的, 而这就是约翰麦卡锡定义
-Lisp的目标之一.
+  以图灵机为代表的计算模型早有先例。但是图灵机程序读起来缺乏启发性。如果你想要一种用来描述算法的语言，可能需要其更加抽象，而这就是 McCarthy 定义 Lisp 的目标之一。
 
 约翰麦卡锡于1960年定义的语言还缺不少东西. 它没有副作用, 没有连续执行
 (它得和副作用在一起才有用), 没有实际可用的数,\footnote{在麦卡锡的1960

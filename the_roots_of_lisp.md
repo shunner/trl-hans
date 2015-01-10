@@ -446,9 +446,9 @@ list
 
   以图灵机为代表的计算模型早已有之。但是图灵机程序读起来缺乏启发性。如果你想要一种用来描述算法的语言，可能需要其更加抽象，而这就是 McCarthy 定义 Lisp 的目标之一。
 
-  他在 1960 年定义的语言缺少很多。它没有函数副作用，没有连续执行（它得和副作用在一起才有用），没有实际可用的数，[<sup>4</sup>](#footnote4)没有动态可视域。但这些限制可以令人惊讶地用极少的额外代码来补救。Steele和Sussman在一篇叫做《The Art of the Interpreter（解释器的艺术）》的著名论文中描述了如何做到这点。[<sup>5</sup>](#footnote5)
+  他在 1960 年定义的这门语言缺少很多特性。它没有函数副作用，没有连续执行（尽管它得和函数副作用在一起才有用），没有实际数，[<sup>4</sup>](#footnote4)没有动态作用域。但这些限制可以用出奇的少量额外代码来补救。Steele 和 Sussman 在一篇著名的论文《The Art of the Interpreter（解释器的艺术）》中描述了如何做到这点。[<sup>5</sup>](#footnote5)
 
-[<a name="footnote4">4</a>]: 在麦卡锡的1960年的Lisp中, 做算术是可能的, 比如用一个有n个原子的表表示数n.}
+[<a name="footnote4">4</a>]: 在 McCarthy 1960 年版的 Lisp 中做算术运算是可能的，比如用一个有 _n_ 个原子的列表来表示 _n_ 这个数。
 
 [<a name="footnote5">5</a>]: Guy Lewis Steele, Jr. and Gerald Jay Sussman, "The Art of the Interpreter, or the Modularity Complex (Parts Zero, One, and Two)," MIT AI Lab Memo 453, May 1978.
 

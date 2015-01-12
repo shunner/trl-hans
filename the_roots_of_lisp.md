@@ -452,11 +452,7 @@ list
 
 [<a name="footnote5">5</a>]: Guy Lewis Steele, Jr. and Gerald Jay Sussman, "The Art of the Interpreter, or the Modularity Complex (Parts Zero, One, and Two)," MIT AI Lab Memo 453, May 1978.
 
-如果你理解了约翰麦卡锡的eval, 那你就不仅仅是理解了程序语言历史中的一个
-阶段.  这些思想至今仍是Lisp的语义核心.  所以从某种意义上, 学习约翰麦卡
-锡的原著向我们展示了Lisp究竟是什么. 与其说Lisp是麦卡锡的设计,不如说是
-他的发现. 它不是生来就是一门用于人工智能, 快速原型开发或同等层次任务的
-语言. 它是你试图公理化计算的结果(之一). 
+如果你理解了 McCarthy 的 eval，你所理解的就远不止程序语言的一个历史阶段。这些思想至今仍是 Lisp 的语义核心。所以从某种意义上而言，学习 McCarthy 的原著向我们展示了 Lisp 的本来面目。Lisp 更像是 McCarthy 的发现而非刻意设计。它不是一门专为人工智能，或快速原型开发，或任何同等层次的某种任务而生的语言。它是你试图将计算公理化时所得到的结果(或至少是结果之一)。
 
 随着时间的推移, 中级语言, 即被中间层程序员使用的语言, 正一致地向Lisp靠
 近.  因此通过理解eval你正在明白将来的主流计算模式会是什么样.

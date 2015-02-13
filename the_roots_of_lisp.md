@@ -3,9 +3,9 @@ Lisp 之根本
 Paul Graham
 
 
-1960 年，John McCarthy 发表了一篇引人注目的论文，他在文中对程序设计领域所做的贡献，有如欧几里德对几何学的贡献。[<sup>1</sup>](#footnote1) 他演示了一种方法，给定几个简单的操作符和一个表示函数的标记（notation），就可以构造出一门完整的编程语言。他称这门语言为 Lisp，即“List Processing”（列表处理）的缩写，因为他的核心思想之一就是，把一种叫做_列表（list）_的简单数据结构同时用于承载代码和数据。
+1960 年，John McCarthy 发表了一篇引人注目的论文，他在文中对程序设计领域所做的贡献，有如欧几里德对几何学的贡献。[<sup>1</sup>](#footnote1) 他演示了一种方法，给定几个简单的操作符和一个表示函数的标记（notation），就可以构造出一门完整的编程语言。他称这门语言为 Lisp，即“List Processing（列表处理）”的缩写，因为他的核心思想之一就是，把一种叫做_列表（list）_的简单数据结构同时用于承载代码和数据。
 
-[<a name="footnote1">1</a>]: "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part1." _Communication of the ACM_ 3:4, April 1960, pp. 184-195.
+[<a name="footnote1">1</a>]: "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I." _Communication of the ACM_ 3:4, April 1960, pp. 184-195.
 
   McCarthy 的发现值得我们深究，因为它不仅是计算机史上的里程碑，而且是时下程序设计逐渐趋向的一种模式。在我看来，目前为止真正整洁、一致的编程模式只有两种：C 语言模式和 Lisp 语言模式。它们就像两座高峰，其间则遍布低洼沼泽。随着计算机变得更加强大，新开发出来的语言一直坚定地向 Lisp 模式靠拢。二十年来，新兴程序设计语言的流行秘方就是，取 C 语言的运算模式，零星点缀一些 Lisp 语言模式的碎片，例如运行时类型和垃圾回收。
 
@@ -66,7 +66,7 @@ foo
     ()
     ```
 
-    这与我们在英语中使用引号的方式一致。Cambridge（剑桥）是一个位于麻省，拥有 9 万人口的城镇，而 "Cambridge" 是一个包含 9 个字母的单词。
+    这与我们在英语中使用引号的方式一致。Cambridge（坎布里奇）是一个位于麻省，拥有 9 万人口的城镇，而 "Cambridge" 是一个包含 9 个字母的单词。
 
     引用，看上去可能有点陌生，因为几乎没有其他语言有类似的概念。它和 Lisp 最与众不同的特征之一紧密相连：代码和数据由相同的数据结构实现，而 quote 操作符是用来区分它们的。
 

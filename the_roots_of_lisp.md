@@ -446,15 +446,16 @@ list
 
   计算模型早已有之，最著名的当属图灵机。但图灵机程序读来缺乏启发性。如果你想要一门用来描述算法的语言，可能需要它更加抽象，而这正是 McCarthy 定义 Lisp 的目标之一。
 
-  他在 1960 年定义的这门语言缺少很多特性。它没有函数副作用，没有连续执行（尽管它仅在函数副作用存在时才有用），没有实际数，[<sup>4</sup>](#footnote4)没有动态作用域。但这些限制可以用少得惊人的附加代码来补救。Steele 和 Sussman 在一篇著名的论文 The Art of the Interpreter（《解释器的艺术》）中描述了如何做到这点。[<sup>5</sup>](#footnote5)
+  他在 1960 年定义的这门语言缺少很多特性。它没有函数副作用（side-effect），没有连续执行（sequential execution）（尽管它仅在函数副作用存在时才有用），没有实际数（practical
+number），[<sup>4</sup>](#footnote4)没有动态作用域（dynamic scope）。但这些限制可以用少得惊人的附加代码来补救。Steele 和 Sussman 在一篇著名的论文 The Art of the Interpreter（《解释器的艺术》）中描述了如何做到这点。[<sup>5</sup>](#footnote5)
 
 [<a name="footnote4">4</a>]: 在 McCarthy 1960 年版的 Lisp 中是可以进行算术运算的，比如用一个有 _n_ 个原子的列表来表示 _n_ 这个数。
 
 [<a name="footnote5">5</a>]: Guy Lewis Steele, Jr. and Gerald Jay Sussman, "The Art of the Interpreter, or the Modularity Complex (Parts Zero, One, and Two)," MIT AI Lab Memo 453, May 1978.
 
-  如果你理解了 McCarthy 的 eval，你所理解的就远不止程序语言的一个历史阶段。这些思想至今仍是 Lisp 的语义核心。因此在某种意义上，学习 McCarthy 的原著向我们展示了 Lisp 的本来面目。它并不是 McCarthy 的设计，而是他的发现。它并不是一门专用于人工智能、快速原型开发或同一级别的其他任务的语言。它是你试图对计算进行公理化时所得到的结果(或至少是之一)。
+  如果你理解了 McCarthy 的 eval，你所理解的就远不止编程语言的一个历史阶段。这些思想至今仍是 Lisp 的语义核心。因此在某种意义上，学习 McCarthy 的原著向我们展示了 Lisp 的本来面目。它并不是 McCarthy 的设计，而是他的发现。它并不是一门专用于人工智能、快速原型开发或同一级别的其他任务的语言。它是你试图对计算进行公理化时所得到的结果(或至少是之一)。
 
-  随着时间的推移，中级语言，即中级程序员所使用的语言，始终在向 Lisp 靠拢。因此通过理解 eval 你始终能够很好地理解主流计算模式将会是什么。
+  随着时间的推移，中级（median）语言，即中级程序员所使用的语言，始终在向 Lisp 靠拢。因此通过理解 eval 你始终能够很好地理解主流计算模式将会是什么。
 
 
 ## 后记
@@ -463,7 +464,7 @@ list
 
   在 McCarthy 的论文中，假值是用 f 而不是空列表来表示的。我用 () 表示假值，以便让示例能在 Common Lisp 中正常运行。没有一处代码依赖于假值也恰好是空列表；没有任何内容被添加（cons）到谓词返回的结果中。
 
-  我跳过了使用点对（dotted pair）构造列表的过程，因为你不需要借此理解 eval。我也没有提及 apply，虽然正是这个 apply（它的早期形式，主要作用是引用实参）被 McCarthy 在 1960 年称为通用函数；而那时的 eval 只是被 apply 调用的一段子程序，用来完成所有工作。
+  我跳过了使用点对（dotted pair）构造列表的过程，因为你不需要借此理解 eval。我也没有提及 apply，虽然正是这个 apply（它的早期形式，主要作用是引用实参）被 McCarthy 在 1960 年称为万能（universal）函数；而那时的 eval 只是被 apply 调用的一段子程序，用来完成所有工作。
 
   我定义 list 和 c_x_r 作为简记法是源于 McCarthy 的做法。实际上 c_x_r 本来都可以被定义为普通的函数。而 list 亦如是，只要我们简单修改下 eval，让函数可以接受任意数目的实参即可。
 
@@ -487,7 +488,7 @@ list
         (cons (list 'e e) (cons (list 'a a) a)))
 ```
 
-  McCarthy 的 eval 有一个小缺陷。第 16 行（相当于）是 (evlis. (cdr e) a) 而不是 (cdr e)，导致命名函数的参数在一次调用中被求值了两次。这表明论文发表时，这段对 eval 的描述还没有用 IBM 704 机器语言实现过。它还证明了如果不去运行程序，要保证不管多短的程序的正确性是多么困难。
+  McCarthy 的 eval 有一个小缺陷。第 16 行（相当于）是 (evlis. (cdr e) a) 而不是 (cdr e)，导致命名函数的实参在一次调用中被求值了两次。这表明论文发表时，这段对 eval 的描述还没有用 IBM 704 机器语言实现过。它还证明了未曾尝试运行就要确保程序的正确性是多么困难，无论程序长短。
 
   我在 McCarthy 的代码中还碰到了另一个问题。在定义了 eval 之后，他继续给出了一些高阶函数（higher-order function）——接受其它函数作为实参的函数——的例子。他定义了 maplist：
 
@@ -501,6 +502,6 @@ list
 然后用它写了一个用于符号微分（symbolic differentiation）的简单函数 diff。而 diff 向 maplist 传递一个以 x 为形参
 的函数，对其的引用却被 maplist 内的形参 x 所捕获。[<sup>6</sup>](#footnote6)
 
-[<a name="footnote6">6</a>]: 当代 Lisp 程序员在这儿会用 mapcar 代替 maplist。这个例子解开了一个谜： 为什么在 Common Lisp 中会有 maplist。它是最早的映射函数，而 mapcar 是后来增加的。
+[<a name="footnote6">6</a>]: 当代 Lisp 程序员在这儿会用 mapcar 代替 maplist。这个例子解开了一个谜： 为什么在 Common Lisp 中会有 maplist。它是最早的映射（mapping）函数，而 mapcar 是后来增加的。
 
-这是关于动态作用域危险性的雄辩证据，即使是最早的 Lisp 高阶函数的例子也因为它而出错。可能 McCarthy 在 1960 年还没有充分意识到动态作用域的后果。动态作用域令人惊异地在 Lisp 的多种实现中存在了相当长的时间——直到 Sussman 和 Steele 于 1975 年开发了 Scheme。词法作用域并没让 eval 的定义复杂多少，却使编译器更加难以编写。
+这是关于动态作用域危险性的雄辩证据，即使是最早的 Lisp 高阶函数的例子也因为它而出错。可能 McCarthy 在 1960 年还没有充分意识到动态作用域的后果。动态作用域令人惊异地在 Lisp 的多种实现中存在了相当长的时间——直到 Sussman 和 Steele 于 1975 年开发了 Scheme。词法作用域（lexcical scope）并没让 eval 的定义复杂多少，却使编译器更加难以编写。

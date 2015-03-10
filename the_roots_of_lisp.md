@@ -66,7 +66,7 @@ foo
     ()
     ```
 
-    这与我们在英语中使用引号的方式一致。Cambridge（坎布里奇）是一个位于麻省，拥有 9 万人口的城镇，"Cambridge" 则是一个包含 9 个字母的单词。
+    这与我们在英语中使用引号的方式一致。Cambridge（坎布里奇）是一个位于麻省，拥有 9 万人口的城镇，"Cambridge" 则是一个包含 9 个字母的单词[<sup>译注1</sup>](#commentary1)。
 
     引用，看起来可能有点陌生，因为几乎没什么语言有类似的概念。它和 Lisp 最与众不同的特征之一紧密相连：代码和数据由相同的数据结构实现，而 quote 操作符正是用来区分二者的。
 
@@ -505,3 +505,5 @@ number），[<sup>4</sup>](#footnote4)没有动态作用域（dynamic scope）�
 [<a name="footnote6">6</a>]: 当代 Lisp 程序员在这儿会用 mapcar 代替 maplist。这个例子解开了一个谜： 为什么在 Common Lisp 中会有 maplist。它是最早的映射（mapping）函数，而 mapcar 是后来增加的。
 
 这是关于动态作用域危险性的雄辩证据，即使是最早的 Lisp 高阶函数的例子也因为它而出错。可能 McCarthy 在 1960 年还没有充分意识到动态作用域的后果。动态作用域令人惊异地在 Lisp 的多种实现中存在了相当长的时间——直到 Sussman 和 Steele 于 1975 年开发了 Scheme。词法作用域（lexcical scope）并没让 eval 的定义复杂多少，却使编译器更加难以编写。
+
+[<a name="commentary1">译注1</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）所在地。

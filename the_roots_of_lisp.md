@@ -5,7 +5,7 @@ Paul Graham
 
 1960 年，John McCarthy 发表了一篇引人注目的论文，他在文中对程序设计领域的贡献，如同欧几里德对几何学的贡献。[<sup>1</sup>](#footnote1) 他演示了如何通过给定几个简单的操作符和一个表示函数的标记（notation）就可以构造出一门完整的编程语言。他称这门语言为 Lisp，即“List Processing（列表处理）”，因为他的核心思想之一就是把一种叫做_列表（list）_的简单数据结构同时用于代码和数据。
 
-[<a name="footnote1">1</a>]: "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I." _Communication of the ACM_ 3:4, April 1960, pp. 184-195.
+[<a name="footnote1">1</a>]: "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I." _Communication of the ACM_ 3:4, April 1960, pp. 184-195.[<sup>译注1</sup>](#commentary1)
 
   McCarthy 的发现非常值得深入理解，因为它不仅是计算机史上的里程碑，更是程序设计当下所趋向的一种模型。在我看来，目前为止真正整洁、一致的编程模型只有两种：C 语言模型和 Lisp 语言模型。它们就像两座高峰，其间则遍布低洼沼泽。随着计算机变得更加强大，新开发的语言一直坚定地向 Lisp 模型靠拢。二十年来，新兴程序设计语言的流行秘方就是取 C 语言的计算模型，零星点缀一些 Lisp 模型的碎片，例如运行时类型和垃圾回收。
 
@@ -66,7 +66,7 @@ foo
     ()
     ```
 
-    这与我们在英语中使用引号的方式一致。Cambridge（坎布里奇）是一个位于麻省，拥有 9 万人口的城镇，"Cambridge" 则是一个包含 9 个字母的单词。[<sup>译注1</sup>](#commentary1)
+    这与我们在英语中使用引号的方式一致。Cambridge（坎布里奇）是一个位于麻省，拥有 9 万人口的城镇，"Cambridge" 则是一个包含 9 个字母的单词。[<sup>译注</sup>](#commentary)
 
     引用，看起来可能有点陌生，因为几乎没什么语言有类似的概念。它和 Lisp 最与众不同的特征之一紧密相连：代码和数据由相同的数据结构实现，而 quote 操作符正是用来区分二者的。
 
@@ -506,4 +506,6 @@ number），[<sup>4</sup>](#footnote4)没有动态作用域（dynamic scope）�
 
 这是关于动态作用域危险性的雄辩证据，即使是最早的 Lisp 高阶函数的例子也因为它而出错。可能 McCarthy 在 1960 年还没有充分意识到动态作用域的后果。动态作用域令人惊异地在 Lisp 的多种实现中存在了相当长的时间——直到 Sussman 和 Steele 于 1975 年开发了 Scheme。词法作用域（lexcical scope）并没让 eval 的定义复杂多少，却使编译器更加难以编写。
 
-[<a name="commentary1">译注1</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）所在地。
+[<a name="commentary1">译注1</a>]: 论文的题目表明它只是 Part I，如果读者也好奇 Part II 是什么内容的话，McCarthy 在[他的个人主页](http://www-formal.stanford.edu/jmc/#proglang)做了解答：Part II 从未面世，原本是要给出一些进行代数运算（algrebaic computation）的 Lisp 程序。
+
+[<a name="commentary">译注</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）之所在。

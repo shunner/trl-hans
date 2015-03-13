@@ -108,7 +108,7 @@ foo
     (b c)
     ```
 
-  7. (cond (_p_<sub>1</sub> _e_<sub>1</sub>) ... (_p_<sub>n</sub> _e_<sub>n</sub>)) 的求值规则如下。对各个 _p_ 表达式依次求值，首次遇到返回 t 的 _p_ 表达式时，就返回相应 _e_ 表达式的值作为整个 cond 表达式的值。
+  7. (cond (_p_<sub>1</sub> _e_<sub>1</sub>) ... (_p_<sub>n</sub> _e_<sub>n</sub>)) 的求值规则如下。对各个 _p_ 表达式依次求值，首次遇到返回 t 的 _p_ 表达式时，其相应 _e_ 表达式的值就作为整个 cond 表达式的值返回。
 
     ```
     > (cond ((eq 'a 'b) 'first)

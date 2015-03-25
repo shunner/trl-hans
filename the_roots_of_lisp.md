@@ -66,7 +66,7 @@ foo
     ()
     ```
 
-    这与我们在英语中使用引号的方式一致。Cambridge（坎布里奇）是一个位于麻省，拥有 9 万人口的城镇，"Cambridge" 则是一个包含 9 个字母的单词。[<sup>译注</sup>](#commentary)
+    这与我们在英语中使用引号的方式一致。Cambridge（坎布里奇）是一个位于麻省，拥有 9 万人口的城镇，"Cambridge" 则是一个包含 9 个字母的单词。[<sup>译注2</sup>](#commentary2)
 
     引用，乍一看可能有点陌生，因为几乎没什么语言有类似的概念。它和 Lisp 最与众不同的特征之一紧密相连：代码和数据由相同的数据结构实现，而 quote 操作符正是我们借以区分二者的手段。
 
@@ -446,7 +446,7 @@ list
 
   计算模型早已有之，最著名的当属图灵机。然而图灵机程序读起来都很乏味。如果你想要一门用来描述算法的语言，可能需要它更加抽象，而这正是 McCarthy 定义 Lisp 的目标之一。
 
-  他在 1960 年定义的这门语言缺少很多特性。它没有函数副作用（side-effect），没有连续执行（sequential execution）（尽管它仅在函数副作用存在时才有用），没有实际数（practical number），[<sup>4</sup>](#footnote4)没有动态作用域（dynamic scope）。但这些限制可以用少得惊人的附加代码来补救。Steele 和 Sussman 在一篇著名的论文 The Art of the Interpreter（《解释器的艺术》）中描述了如何做到这点。[<sup>5</sup>](#footnote5)
+  他在 1960 年定义的这门语言缺少很多特性。它没有函数副作用（side-effect），没有连续执行（sequential execution）（尽管它仅在函数副作用存在时才有用），没有实际数（practical number），[<sup>4</sup>](#footnote4)没有动态作用域（dynamic scope）。但这些限制可以用少得惊人的附加代码来补救。Steele 和 Sussman 在一篇著名的论文 The Art of the Interpreter（《解释器的艺术》）中描述了如何做到这点。[<sup>5</sup>](#footnote5) [<sup>译注3</sup>](#commentary3)
 
 [<a name="footnote4">4</a>]: 在 McCarthy 1960 年版的 Lisp 中是可以进行算术运算的，比如用一个有 _n_ 个原子的列表来表示 _n_ 这个数。
 
@@ -507,4 +507,6 @@ list
 
 [<a name="commentary1">译注1</a>]: 论文的题目表明它只是 Part I，如果读者也好奇 Part II 是什么内容的话，McCarthy 在[他的个人主页](http://www-formal.stanford.edu/jmc/#proglang)做了解答：Part II 从未面世，原本是要给出一些进行代数运算（algrebaic computation）的 Lisp 程序。
 
-[<a name="commentary">译注</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）之所在。
+[<a name="commentary2">译注2</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）之所在。
+
+[<a name="commentary3">译注3</a>]: 这两位论文作者同时也是 Lisp 著名方言之一 Scheme 语言的发明人，详见 [Scheme (programming language) - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Scheme_(programming_language)#Origins)。

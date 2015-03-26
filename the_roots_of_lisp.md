@@ -446,13 +446,13 @@ list
 
   计算模型早已有之，最著名的当属图灵机。然而图灵机程序读起来都很乏味。如果你想要一门用来描述算法的语言，可能需要它更加抽象，而这正是 McCarthy 定义 Lisp 的目标之一。
 
-  他在 1960 年定义的这门语言缺少很多特性。它没有函数副作用（side-effect），没有连续执行（sequential execution）（尽管它仅在函数副作用存在时才有用），没有实际数（practical number），[<sup>4</sup>](#footnote4)没有动态作用域（dynamic scope）。但这些限制可以用少得惊人的附加代码来补救。Steele 和 Sussman 在一篇著名的论文 The Art of the Interpreter（《解释器的艺术》）中描述了如何做到这点。[<sup>5</sup>](#footnote5) [<sup>译注3</sup>](#commentary3)
+  他在 1960 年定义的这门语言缺少很多特性。它没有函数副作用（side-effect），没有连续执行（sequential execution）（尽管它仅在函数副作用存在时才有用），没有实际数（practical number），[<sup>4</sup>](#footnote4)没有动态作用域（dynamic scope）。但这些限制可以用少得惊人的附加代码来解除。Steele 和 Sussman 在一篇著名的论文 The Art of the Interpreter（《解释器的艺术》）中描述了如何做到这点。[<sup>5</sup>](#footnote5) [<sup>译注3</sup>](#commentary3)
 
 [<a name="footnote4">4</a>]: 在 McCarthy 1960 年版的 Lisp 中是可以进行算术运算的，比如用一个有 _n_ 个原子的列表来表示 _n_ 这个数。
 
 [<a name="footnote5">5</a>]: Guy Lewis Steele, Jr. and Gerald Jay Sussman, "The Art of the Interpreter, or the Modularity Complex (Parts Zero, One, and Two)," MIT AI Lab Memo 453, May 1978.
 
-  如果你理解了 McCarthy 的 eval，你所理解的就远不止编程语言的一个历史阶段。这些思想至今仍是 Lisp 的语义核心。因此在某种意义上，学习 McCarthy 的原著向我们展示了 Lisp 的本来面目。它并不是 McCarthy 的设计，而是他的发现。它并不是一门专用于人工智能、快速原型开发或同一级别的其他任务的语言。它是你试图对计算进行公理化时所得到的结果(或至少是之一)。
+  如果你理解了 McCarthy 的 eval，你所理解的就远不止编程语言的一个历史阶段。这些思想至今仍是 Lisp 的语义核心。因此在某种意义上，学习 McCarthy 的原著向我们展示了 Lisp 的本来面目。它并不是 McCarthy 设计的，而是他发现的。它并不是一门专用于人工智能、快速原型开发或同一层次的其他任务的语言。它是当你试图对计算进行公理化时得到的结果(或结果之一)。
 
   随着时间的推移，中级（median）语言，即中级程序员所使用的语言，始终在向 Lisp 靠拢。因此通过理解 eval 你始终能够很好地理解主流计算模式将会是什么。
 

@@ -454,7 +454,7 @@ list
 
   如果你理解了 McCarthy 的 eval，你所理解的就远不止编程语言的一个历史阶段。这些思想至今仍是 Lisp 的语义核心。因此在某种意义上，学习 McCarthy 的原著向我们展示了 Lisp 的本来面目。它并不是 McCarthy 设计的，而是他发现的。它并不是一门专用于人工智能、快速原型开发或同一层次的其他任务的语言。它是当你试图对计算进行公理化时得到的结果(或结果之一)。
 
-  随着时间的推移，中级（median）语言，即中级程序员所使用的语言，始终在向 Lisp 靠拢。因此通过理解 eval 你始终能够很好地理解主流计算模式将会是什么。
+  随着时间的推移，中级（median）语言，即中级程序员所使用的语言，[<sup>译注4</sup>](#commentary4)始终在向 Lisp 靠拢。因此通过理解 eval 你始终能够很好地理解未来的主流计算模式将会是什么。
 
 
 ## 后记
@@ -510,3 +510,5 @@ list
 [<a name="commentary2">译注2</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）之所在。
 
 [<a name="commentary3">译注3</a>]: 这两位论文作者同时也是 Lisp 著名方言之一 Scheme 语言的发明人，详见 [Scheme (programming language) - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Scheme_(programming_language)#Origins)。
+
+[<a name="commentary4">译注4</a>]: Median 即我们在数学课学过的“中位数”，相对于 average（平均数或普通的），或许原作者使用 median 是为了体现恰好处于群体正中间的个体。阮一峰在其译作《黑客与画家》（ISBN：978-7-115-24949-4，第178页）中，将类似的一句译为“一种很普通的编程语言就是很普通的程序员使用的语言”。

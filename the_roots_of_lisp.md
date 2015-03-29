@@ -511,4 +511,4 @@ list
 
 [<a name="commentary3">译注3</a>]: 这两位论文作者同时也是 Lisp 著名方言之一 Scheme 语言的发明人，详见 [Scheme (programming language) - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Scheme_(programming_language)#Origins)。
 
-[<a name="commentary4">译注4</a>]: Median 即我们在数学课学过的“中位数”，相对于 average（平均数或普通的），或许原作者使用 median 是为了体现恰好处于群体正中间的个体。阮一峰在其译作《黑客与画家》（ISBN：978-7-115-24949-4，第178页）中，将类似的一句译为“一种很普通的编程语言就是很普通的程序员使用的语言”。
+[<a name="commentary4">译注4</a>]: Median 即我们在数学（或统计学）课里学过的“中位数”。相对于 average（“平均数”或“普通的”），原作者使用 median 或许是为了特指处于一个存在极大个体差异的群体正中间的那个个体或小群体。阮一峰在其译作《黑客与画家》（ISBN：978-7-115-24949-4，第178页）中，将类似的一句话译为“一种很普通的编程语言就是很普通的程序员使用的语言”。

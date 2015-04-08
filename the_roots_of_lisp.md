@@ -465,7 +465,7 @@ list
 
   我跳过了使用点对（dotted pair）构造列表的过程，因为你不需要借此理解 eval。我也没有提及 apply，尽管正是这个 apply（它的早期形式，主要作用是引用实参）在 1960 年被 McCarthy 称为万能（universal）函数；而 eval 当时只是一段被 apply 调用来完成所有工作的子程序。
 
-  我定义 list 和 c_x_r 作为简记法是源于 McCarthy 的做法。实际上 c_x_r 本来都可以被定义为普通的函数。而 list 亦如是，只要我们简单修改下 eval，让函数可以接受任意数目的实参即可。
+  我定义 list 和 c_x_r 作为简记法是源于 McCarthy 的做法。实际上 c_x_r 本来都可以定义为普通的函数。而 list 亦如是，只要我们简单修改下 eval，让函数可以接受任意数目的实参即可。
 
   McCarthy 的论文中仅有五个基本操作符。虽然他使用了 cond 和 quote，但多半是将其作为元语言（metalanguage）的一部分。他同样没有定义逻辑操作符 and 和 not，不过这不成问题，因为它们可以被恰如其分地定义为函数。
 
@@ -498,7 +498,7 @@ list
                ('t (cons (f x) (maplist (cdr x) f))))))
 ```
 
-然后用它写了一个用于符号微分（symbolic differentiation）的简单函数 diff。而 diff 向 maplist 传递一个以 x 为形参
+然后用它写了一个用于符号微分（symbolic differentiation）的简单函数 diff。而 diff 向 maplist 传递了一个以 x 为形参
 的函数，对其的引用却被 maplist 内的形参 x 所捕获。[<sup>6</sup>](#footnote6)
 
 [<a name="footnote6">6</a>]: 当代 Lisp 程序员在这儿会用 mapcar 代替 maplist。这个例子解开了一个谜： 为什么在 Common Lisp 中会有 maplist。它是最早的映射（mapping）函数，而 mapcar 是后来增加的。

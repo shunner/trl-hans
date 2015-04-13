@@ -498,12 +498,11 @@ list
                ('t (cons (f x) (maplist (cdr x) f))))))
 ```
 
-然后用它写了一个用于符号微分（symbolic differentiation）的简单函数 diff。而 diff 向 maplist 传递了一个以 x 为形参
-的函数，对其的引用却被 maplist 内的形参 x 所捕获。[<sup>6</sup>](#footnote6)
+然后用它写了一个简单的函数 diff 用于符号微分（symbolic differentiation）。而 diff 向 maplist 传递了一个函数，对该函数的形参 x 的引用却被 maplist 内部的形参 x 所捕获。[<sup>6</sup>](#footnote6)
 
 [<a name="footnote6">6</a>]: 当代 Lisp 程序员在这儿会用 mapcar 代替 maplist。这个例子解开了一个谜： 为什么在 Common Lisp 中会有 maplist。它是最早的映射（mapping）函数，而 mapcar 是后来增加的。
 
-这是关于动态作用域危险性的雄辩证据，即使是最早的 Lisp 高阶函数的例子也因为它而出错。可能 McCarthy 在 1960 年还没有充分意识到动态作用域的后果。动态作用域令人惊异地在 Lisp 的多种实现中存在了相当长的时间——直到 Sussman 和 Steele 于 1975 年开发了 Scheme。词法作用域（lexcical scope）并没让 eval 的定义复杂多少，却使编译器更加难以编写。
+这是一则关于动态作用域危险性的生动证据，即使是最早的 Lisp 高阶函数的例子也因为它而出错。可能 McCarthy 在 1960 年还没有充分意识到动态作用域的后果。动态作用域令人惊异地在 Lisp 的多种实现中存在了相当长的时间——直到 Sussman 和 Steele 于 1975 年开发了 Scheme。词法作用域（lexcical scope）并没让 eval 的定义复杂多少，却使编译器更加难以编写。
 
 [<a name="commentary1">译注1</a>]: 论文的题目表明它只是 Part I，如果读者也好奇 Part II 是什么内容的话，McCarthy 在[他的个人主页](http://www-formal.stanford.edu/jmc/#proglang)做了解答：Part II 从未面世，原本是要给出一些进行代数运算（algrebaic computation）的 Lisp 程序。
 

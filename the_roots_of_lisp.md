@@ -498,7 +498,7 @@ list
                ('t (cons (f x) (maplist (cdr x) f))))))
 ```
 
-然后用它写了一个简单的函数 diff 用于符号微分（symbolic differentiation）。而 diff 向 maplist 传递了一个函数，对该函数的形参 x 的引用却被 maplist 内部的形参 x 所捕获。[<sup>6</sup>](#footnote6)
+然后用它编写了一个简单的函数 diff 用于符号微分（symbolic differentiation）。而 diff 向 maplist 传递了一个函数，对该函数的形参 x 的引用却被 maplist 内部的形参 x 所捕获。[<sup>6</sup>](#footnote6)
 
 [<a name="footnote6">6</a>]: 当代 Lisp 程序员在这儿会用 mapcar 代替 maplist。这个例子解开了一个谜： 为什么在 Common Lisp 中会有 maplist。它是最早的映射（mapping）函数，而 mapcar 是后来增加的。
 
@@ -506,8 +506,8 @@ list
 
 [<a name="commentary1">译注1</a>]: 论文的题目表明它只是 Part I，如果读者也好奇 Part II 是什么内容的话，McCarthy 在[他的个人主页](http://www-formal.stanford.edu/jmc/#proglang)做了解答：Part II 从未面世，原本是要给出一些进行代数运算（algrebaic computation）的 Lisp 程序。
 
-[<a name="commentary2">译注2</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）之所在。
+[<a name="commentary2">译注2</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）所在地。
 
-[<a name="commentary3">译注3</a>]: 这两位论文作者同时也是 Lisp 著名方言之一 Scheme 语言的发明人，详见 [Scheme (programming language) - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Scheme_(programming_language)#Origins)。
+[<a name="commentary3">译注3</a>]: 这篇论文的两位作者同时也是 Lisp 的著名方言之一 Scheme 语言的发明人，详见 [Scheme (programming language) - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Scheme_(programming_language)#Origins)。
 
-[<a name="commentary4">译注4</a>]: Median 即我们在数学（或统计学）课里学过的“中位数”。相对于 average（“平均数”或“普通的”），原作者使用 median 或许是为了特指处于一个存在极大个体差异的群体正中间的个体或小群体。阮一峰在其译作《黑客与画家》（ISBN：978-7-115-24949-4，第178页）中，将类似的一句话译为“一种很普通的编程语言就是很普通的程序员使用的语言”。
+[<a name="commentary4">译注4</a>]: Median 即我们在数学（或统计学）课里学过的“中位数”。相对于 average（“平均数”或“普通的”），原作者使用 median 或许是特指处于个体差异极大的群体正中间的个体或小群体。阮一峰在其译作《黑客与画家》（ISBN：978-7-115-24949-4，第178页）中，将类似的一句话译为“一种很普通的编程语言就是很普通的程序员使用的语言”，摘录于此，供读者参考。

@@ -5,7 +5,7 @@ Paul Graham
 
 1960 年，John McCarthy 发表了一篇引人注目的论文，他在文中对程序设计领域的贡献，如同欧几里德对几何学的贡献。[<sup>1</sup>](#footnote1) 他演示了如何通过给定几个简单的操作符和一个表示函数的标记（notation）就可以构造出一门完整的编程语言。他称这门语言为 Lisp，即“List Processing（列表处理）”，因为他的核心思想之一就是把一种叫做_列表（list）_的简单数据结构同时用于代码和数据。
 
-[<a name="footnote1">1</a>]: "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I." _Communication of the ACM_ 3:4, April 1960, pp. 184-195.[<sup>译注1</sup>](#commentary1)
+<a name="footnote1"></a>1: "Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I." _Communication of the ACM_ 3:4, April 1960, pp. 184-195.[<sup>译注1</sup>](#commentary1)
 
   McCarthy 的发现非常值得深入理解，因为它不仅是计算机史上的里程碑，更是程序设计当下趋向的一种模型。在我看来，目前为止真正整洁、一致的编程模型只有两种：C 语言模型和 Lisp 语言模型。它们就像两座高峰，其间则遍布低洼沼泽。随着计算机变得更加强大，新开发的语言一直坚定地向 Lisp 模型靠拢。二十年来，新兴程序设计语言的流行秘方就是取 C 语言的计算模型，零星点缀一些 Lisp 模型的碎片，例如运行时类型（runtime typing）和垃圾回收（garbage collection）。
 
@@ -118,7 +118,7 @@ foo
 
 只要被求值的表达式以七个基本操作符中的五个开头，它的实参就会被求值。[<sup>2</sup>](#footnote2) 我们把这类操作符叫做_函数（function）_。
 
-[<a name="footnote2">2</a>]: 以另外两个操作符 quote 和 cond 开头的表达式，其求值方式有所不同。当 quote 表达式被求值时, 它的实参并未被求值，而是作为整个表达式的值返回。在一个有效的 cond 表达式中，只有 L 形支路上的子表达式会被求值。
+<a name="footnote2"></a>2: 以另外两个操作符 quote 和 cond 开头的表达式，其求值方式有所不同。当 quote 表达式被求值时, 它的实参并未被求值，而是作为整个表达式的值返回。在一个有效的 cond 表达式中，只有 L 形支路上的子表达式会被求值。
 
 
 ## 二、函数表示
@@ -154,13 +154,13 @@ foo
 (a b c)
 ```
 
-还有另一个标记能让函数引用自己，从而给我们定义递归函数提供了便利。[<sup>3</sup>](#footnote3) 
+还有另一个标记能让函数引用自己，从而给我们定义递归函数提供了便利。[<sup>3</sup>](#footnote3)
 
 (label f (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_))
 
 这一标记所表示的函数，其行为就像是 (lambda (_p_<sub>1</sub> ... _p_<sub>n</sub>) _e_)，并附带如下属性，在 _e_ 中出现的任何 _f_ 都将被当作该 label 表达式求值，如同 _f_ 是函数的形参。
 
-[<a name="footnote3">3</a>]: 逻辑上我们并不需要为此定义一个新标记。我们可以使用现有的标记，借助一种叫做 Y 组合子（Y combinator）的高阶函数来定义递归函数。或许 McCathy 撰写这篇论文时还不知道 Y 组合子。无论如何, label 标记更具可读性。
+<a name="footnote3"></a>3: 逻辑上我们并不需要为此定义一个新标记。我们可以使用现有的标记，借助一种叫做 Y 组合子（Y combinator）的高阶函数来定义递归函数。或许 McCathy 撰写这篇论文时还不知道 Y 组合子。无论如何, label 标记更具可读性。
 
   假设我们要定义一个函数 (subst _x y z_)，它接受一个表达式 _x_，一个原子 _y_ 和一个列表 _z_ 并返回一个像 _z_ 那样的列表，将 _z_ 中出现的 _y_（在任何嵌套层次上）替换为 _x_。
 
@@ -312,10 +312,10 @@ e
 
   ```
   (defun eval. (e a)
-    (cond 
+    (cond
       ((atom e) (assoc. e a))
       ((atom (car e))
-       (cond 
+       (cond
          ((eq (car e) 'quote) (cadr e))
          ((eq (car e) 'atom)  (atom   (eval. (cadr e) a)))
          ((eq (car e) 'eq)    (eq     (eval. (cadr e) a)
@@ -448,9 +448,9 @@ list
 
   他在 1960 年定义的这门语言缺少很多特性。它没有函数副作用（side-effect），没有连续执行（sequential execution）（尽管它仅在函数副作用存在时才有用），没有实际数（practical number），[<sup>4</sup>](#footnote4)没有动态作用域（dynamic scope）。但这些限制可以用少得惊人的附加代码来解除。Steele 和 Sussman 在一篇著名的论文 The Art of the Interpreter（《解释器的艺术》）中描述了如何做到这点。[<sup>5</sup>](#footnote5) [<sup>译注3</sup>](#commentary3)
 
-[<a name="footnote4">4</a>]: 在 McCarthy 1960 年版的 Lisp 中是可以进行算术运算的，比如用一个有 _n_ 个原子的列表来表示 _n_ 这个数。
+<a name="footnote4"></a>4: 在 McCarthy 1960 年版的 Lisp 中是可以进行算术运算的，比如用一个有 _n_ 个原子的列表来表示 _n_ 这个数。
 
-[<a name="footnote5">5</a>]: Guy Lewis Steele, Jr. and Gerald Jay Sussman, "The Art of the Interpreter, or the Modularity Complex (Parts Zero, One, and Two)," MIT AI Lab Memo 453, May 1978.
+<a name="footnote5"></a>5: Guy Lewis Steele, Jr. and Gerald Jay Sussman, "The Art of the Interpreter, or the Modularity Complex (Parts Zero, One, and Two)," MIT AI Lab Memo 453, May 1978.
 
   如果你理解了 McCarthy 的 eval，你所理解的就远不止编程语言的一个历史阶段。这些思想至今仍是 Lisp 的语义核心。因此在某种意义上，学习 McCarthy 的原著向我们展示了 Lisp 的本来面目。它并不是 McCarthy 设计的，而是他发现的。它并不是一门专用于人工智能、快速原型开发或同一层次的其他任务的语言。它是当你试图对计算进行公理化时得到的结果(或结果之一)。
 
@@ -500,14 +500,14 @@ list
 
 然后用它编写了一个简单的函数 diff 用于符号微分（symbolic differentiation）。而 diff 向 maplist 传递了一个函数，对该函数的形参 x 的引用却被 maplist 内部的形参 x 所捕获。[<sup>6</sup>](#footnote6)
 
-[<a name="footnote6">6</a>]: 当代 Lisp 程序员在这儿会用 mapcar 代替 maplist。这个例子解开了一个谜： 为什么在 Common Lisp 中会有 maplist。它是最早的映射（mapping）函数，而 mapcar 是后来增加的。
+<a name="footnote6"></a>6: 当代 Lisp 程序员在这儿会用 mapcar 代替 maplist。这个例子解开了一个谜： 为什么在 Common Lisp 中会有 maplist。它是最早的映射（mapping）函数，而 mapcar 是后来增加的。
 
 这是一则关于动态作用域危险性的生动证据，即使是最早的 Lisp 高阶函数的例子也因为它而出错。可能 McCarthy 在 1960 年还没有充分意识到动态作用域的后果。动态作用域令人惊异地在 Lisp 的多种实现中存在了相当长的时间——直到 Sussman 和 Steele 于 1975 年开发了 Scheme。词法作用域（lexcical scope）并没让 eval 的定义复杂多少，却使编译器更加难以编写。
 
-[<a name="commentary1">译注1</a>]: 论文的题目表明它只是 Part I，如果读者也好奇 Part II 是什么内容的话，McCarthy 在[他的个人主页](http://www-formal.stanford.edu/jmc/#proglang)做了解答：Part II 从未面世，原本是要给出一些进行代数运算（algrebaic computation）的 Lisp 程序。
+<a name="commentary1"></a>译注1: 论文的题目表明它只是 Part I，如果读者也好奇 Part II 是什么内容的话，McCarthy 在[他的个人主页](http://www-formal.stanford.edu/jmc/#proglang)做了解答：Part II 从未面世，原本是要给出一些进行代数运算（algrebaic computation）的 Lisp 程序。
 
-[<a name="commentary2">译注2</a>]: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）所在地。
+<a name="commentary2"></a>译注2: 位于美国马萨诸塞州（又称麻省）的 Cambridge 因与英国剑桥同名，常被译作“美国剑桥”或“坎布里奇”。此地正是 McCarthy 当时供职的 MIT（麻省理工学院）所在地。
 
-[<a name="commentary3">译注3</a>]: 这篇论文的两位作者同时也是 Lisp 的著名方言之一 Scheme 语言的发明人，详见 [Scheme (programming language) - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Scheme_(programming_language)#Origins)。
+<a name="commentary3"></a>译注3: 这篇论文的两位作者同时也是 Lisp 的著名方言之一 Scheme 语言的发明人，详见 [Scheme (programming language) - Wikipedia, the free encyclopedia](http://en.wikipedia.org/wiki/Scheme_(programming_language)#Origins)。
 
-[<a name="commentary4">译注4</a>]: Median 即我们在数学（或统计学）课里学过的“中位数”。相对于 average（“平均数”或“普通的”），原作者使用 median 或许是特指处于个体差异极大的群体正中间的个体或小群体。阮一峰在其译作《黑客与画家》（ISBN：978-7-115-24949-4，第178页）中，将类似的一句话译为“一种很普通的编程语言就是很普通的程序员使用的语言”，摘录于此，供读者参考。
+<a name="commentary4"></a>译注4: Median 即我们在数学（或统计学）课里学过的“中位数”。相对于 average（“平均数”或“普通的”），原作者使用 median 或许是特指处于个体差异极大的群体正中间的个体或小群体。阮一峰在其译作《黑客与画家》（ISBN：978-7-115-24949-4，第178页）中，将类似的一句话译为“一种很普通的编程语言就是很普通的程序员使用的语言”，摘录于此，供读者参考。
